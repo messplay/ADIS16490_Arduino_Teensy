@@ -210,7 +210,7 @@ int16_t *ADIS16490::sensorRead(void) {
 
   // Read data from requested register and transfer the next address in the same frame
   digitalWrite(_CS, LOW); // Set CS low to enable device
-  sensorbyte[0] = SPI.transfer(ALM_STS); // Send next address and place DIAG_STS MSB into variable
+  sensorbyte[0] = SPI.transfer(SYS_E_FLAG); // Send next address and place DIAG_STS MSB into variable
   sensorbyte[1] = SPI.transfer(0x00); // Complete word and place DIAG_STS LSB into variable
   digitalWrite(_CS, HIGH); // Set CS high to disable device
 
@@ -218,7 +218,7 @@ int16_t *ADIS16490::sensorRead(void) {
 
   // Read data from requested register and transfer the next address in the same frame
   digitalWrite(_CS, LOW); // Set CS low to enable device
-  sensorbyte[2] = SPI.transfer(X_GYRO_OUT); // Send next address and place ALM_STS MSB into variable
+  sensorbyte[2] = SPI.transfer(X_GYRO_OUT); // Send next address and place SYS_E_FLAG MSB into variable
   sensorbyte[3] = SPI.transfer(0x00); // Complete word and place ALM_STS LSB into variable
   digitalWrite(_CS, HIGH); // Set CS high to disable device
 
@@ -282,7 +282,7 @@ int16_t *ADIS16490::sensorRead(void) {
 
   // Join bytes into words
   sensorwords[0] = ((sensorbyte[0] << 8) | (sensorbyte[1] & 0xFF)); //DIAG_STS
-  sensorwords[1] = ((sensorbyte[2] << 8) | (sensorbyte[3] & 0xFF)); //ALM_STS
+  sensorwords[1] = ((sensorbyte[2] << 8) | (sensorbyte[3] & 0xFF)); //SYS_E_FLAG
   sensorwords[2] = ((sensorbyte[4] << 8) | (sensorbyte[5] & 0xFF)); //XGYRO
   sensorwords[3] = ((sensorbyte[6] << 8) | (sensorbyte[7] & 0xFF)); //YGYRO
   sensorwords[4] = ((sensorbyte[8] << 8) | (sensorbyte[9] & 0xFF)); //ZGYRO
